@@ -1,0 +1,43 @@
+#%RAML 0.8
+title: Totp server
+version: v1
+baseUri: http://api.samplehost.com
+mediaType: application/json
+
+/createSecret:
+    post:
+      headers:
+        username:
+          description: name of the user
+          required: true
+          example: 'bram01'
+      description: post a username and get a secret totp token in return
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                 {"totp_secret" : "KZH2OMITFP4ZHR7A"}
+/validateToken:
+    post:
+      headers:
+        username:
+          description: name of the user
+          required: true
+          example: 'bram01'
+        token:
+          description: totp token
+          required: true
+          example: '745382'
+      description: post a token and return status
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {"result" : "validated"}
+        401:
+          body:
+            application/json:
+              example: |
+                {"result" : "not Authorized"}
